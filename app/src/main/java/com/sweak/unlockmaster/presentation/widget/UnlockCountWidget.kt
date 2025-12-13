@@ -15,6 +15,7 @@ import androidx.glance.appwidget.AndroidRemoteViews
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.provideContent
 import androidx.glance.background
+import androidx.glance.color.ColorProvider
 import androidx.glance.currentState
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Alignment.Companion.Center
@@ -26,7 +27,6 @@ import androidx.glance.text.FontFamily
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
-import androidx.glance.unit.ColorProvider
 import com.sweak.unlockmaster.R
 import com.sweak.unlockmaster.presentation.MainActivity
 
@@ -37,7 +37,7 @@ class UnlockCountWidget : GlanceAppWidget() {
             Box(
                 modifier = GlanceModifier
                     .fillMaxSize()
-                    .background(ColorProvider(Color(0xFFF3F4F5)))
+                    .background(ColorProvider(day = Color(0xFFF3F4F5), night = Color(0xFFF3F4F5)))
                     .clickable(actionStartActivity<MainActivity>()),
                 contentAlignment = Center
             ) {
@@ -63,7 +63,7 @@ class UnlockCountWidget : GlanceAppWidget() {
                     Text(
                         text = unlockCount.toString(),
                         style = TextStyle(
-                            color = ColorProvider(Color.Black),
+                            color = ColorProvider(day = Color.Black, night = Color.Black),
                             fontSize = 48.sp,
                             fontWeight = FontWeight.Bold,
                             fontFamily = FontFamily.SansSerif
@@ -76,7 +76,7 @@ class UnlockCountWidget : GlanceAppWidget() {
                             unlockCount
                         ),
                         style = TextStyle(
-                            color = ColorProvider(Color.Black),
+                            color = ColorProvider(day = Color.Black, night = Color.Black),
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Medium,
                             fontFamily = FontFamily.SansSerif
