@@ -49,7 +49,6 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.times
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.navigation.NavController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -66,6 +65,7 @@ import com.sweak.unlockmaster.presentation.common.theme.space
 import com.sweak.unlockmaster.presentation.common.util.navigateThrottled
 import com.sweak.unlockmaster.presentation.common.util.popBackStackThrottled
 import androidx.core.net.toUri
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 
 @SuppressLint("BatteryLife")
 @OptIn(ExperimentalPermissionsApi::class, ExperimentalMaterial3Api::class)
