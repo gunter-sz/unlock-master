@@ -4,7 +4,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import androidx.compose.foundation.clickable
@@ -66,6 +65,7 @@ import com.sweak.unlockmaster.presentation.common.components.ProceedButton
 import com.sweak.unlockmaster.presentation.common.theme.space
 import com.sweak.unlockmaster.presentation.common.util.navigateThrottled
 import com.sweak.unlockmaster.presentation.common.util.popBackStackThrottled
+import androidx.core.net.toUri
 
 @SuppressLint("BatteryLife")
 @OptIn(ExperimentalPermissionsApi::class, ExperimentalMaterial3Api::class)
@@ -192,10 +192,10 @@ fun WorkInBackgroundScreen(
                                         Intent(
                                             Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
                                         ).apply {
-                                            data = Uri.parse("package:${context.packageName}")
+                                            data = "package:${context.packageName}".toUri()
                                         }
                                     )
-                                } catch (exception: ActivityNotFoundException) {
+                                } catch (_: ActivityNotFoundException) {
                                     workInBackgroundViewModel.onEvent(
                                         WorkInBackgroundScreenEvent
                                             .IsIgnoreBatteryOptimizationsRequestUnavailableDialogVisible(
@@ -292,7 +292,7 @@ fun WorkInBackgroundScreen(
                                 try {
                                     uriHandler.openUri(backgroundWorkImprovementWebsite)
                                     hasUserNavigatedToBackgroundWorkWebsite = true
-                                } catch (exception: ActivityNotFoundException) {
+                                } catch (_: ActivityNotFoundException) {
                                     workInBackgroundViewModel.onEvent(
                                         WorkInBackgroundScreenEvent
                                             .IsWebBrowserNotFoundDialogVisible(isVisible = true)
@@ -493,7 +493,7 @@ fun WorkInBackgroundScreen(
                 )
                 context.startActivity(
                     Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                        data = Uri.parse("package:${context.packageName}")
+                        data = "package:${context.packageName}".toUri()
                     }
                 )
             },

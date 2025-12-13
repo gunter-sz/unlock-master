@@ -22,7 +22,7 @@ class UnlockEventsRepositoryFake : UnlockEventsRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getLatestUnlockEvent(): UnlockEvent? {
+    override suspend fun getLatestUnlockEvent(): UnlockEvent {
         TODO("Not yet implemented")
     }
 

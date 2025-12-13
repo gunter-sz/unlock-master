@@ -1,11 +1,10 @@
 package com.sweak.unlockmaster.presentation.common.util
 
-import android.content.Context
 import android.content.res.Resources
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.sweak.unlockmaster.R
-import com.sweak.unlockmaster.presentation.common.util.Duration.*
+import com.sweak.unlockmaster.presentation.common.util.Duration.DisplayPrecision
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter

@@ -151,7 +151,7 @@ class UnlockMasterBackupManagerImpl @Inject constructor(
                 setUiThemeMode(
                     UiThemeMode.valueOf(unlockMasterBackupData.userPreferences.uiThemeMode)
                 )
-            } catch (ignored: IllegalArgumentException) { }
+            } catch (_: IllegalArgumentException) { }
 
             // Potentially restoring from the backup of UnlockMaster version that didn't have
             // the over unlock limit notifications customization - the field might be null:

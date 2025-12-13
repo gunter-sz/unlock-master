@@ -130,28 +130,34 @@ class GetSessionEventsForGivenDayUseCase @Inject constructor(
         }
 
         consideredScreenEvents.subList(1, consideredScreenEvents.size).forEach {
-            if (previousUnlockMasterEvent is UnlockEvent &&
-                (it is LockEvent || it is CounterPausedEvent)
-            ) {
-                allSessionEvents.add(
-                    ScreenTime(
-                        previousSinceTime,
-                        it.timeInMillis,
-                        it.timeInMillis - previousSinceTime
+            when (previousUnlockMasterEvent) {
+                is UnlockEvent if (it is LockEvent || it is CounterPausedEvent)
+                    -> {
+                    allSessionEvents.add(
+                        ScreenTime(
+                            previousSinceTime,
+                            it.timeInMillis,
+                            it.timeInMillis - previousSinceTime
+                        )
                     )
-                )
-            } else if (previousUnlockMasterEvent is CounterUnpausedEvent && it is LockEvent) {
-                allSessionEvents.add(
-                    ScreenTime(
-                        previousUnlockMasterEvent.timeInMillis,
-                        it.timeInMillis,
-                        it.timeInMillis - previousUnlockMasterEvent.timeInMillis
+                }
+
+                is CounterUnpausedEvent if it is LockEvent -> {
+                    allSessionEvents.add(
+                        ScreenTime(
+                            previousUnlockMasterEvent.timeInMillis,
+                            it.timeInMillis,
+                            it.timeInMillis - previousUnlockMasterEvent.timeInMillis
+                        )
                     )
-                )
-            } else if (previousUnlockMasterEvent is CounterPausedEvent &&
-                it is CounterUnpausedEvent
-            ) {
-                allSessionEvents.add(CounterPaused(previousSinceTime, it.timeInMillis))
+                }
+
+                is CounterPausedEvent if it is CounterUnpausedEvent
+                    -> {
+                    allSessionEvents.add(CounterPaused(previousSinceTime, it.timeInMillis))
+                }
+
+                else -> { /* no-op */ }
             }
 
             if (it is UnlockEvent || it is CounterPausedEvent) {

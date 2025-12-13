@@ -127,7 +127,7 @@ class DailyWrapUpAlarmReceiver : BroadcastReceiver() {
         // Notification: 22:15, Current: 22:23 -> Diff = 8 - NO RESCHEDULE
         // Notification: 22:15, Current: 21:23 -> Diff = -52 - RESCHEDULE (time shifted back)
         // Notification: 22:15, Current: 23:23 -> Diff = 68 - RESCHEDULE (likely time forwarded)
-        if (minutesDifference < 0 || minutesDifference >= 60) {
+        if (minutesDifference !in 0..<60) {
             scheduleDailyWrapUpNotificationsUseCase()
         }
     }

@@ -77,11 +77,11 @@ class DataBackupViewModel @Inject constructor(
                                 }
                             }
                         }
-                    } catch (fileNotFoundException: FileNotFoundException) {
+                    } catch (_: FileNotFoundException) {
                         state = state.copy(isBackupCreationErrorDialogVisible = true)
-                    } catch (ioException: IOException) {
+                    } catch (_: IOException) {
                         state = state.copy(isBackupCreationErrorDialogVisible = true)
-                    } catch (jsonIoException: JsonIOException) {
+                    } catch (_: JsonIOException) {
                         state = state.copy(isBackupCreationErrorDialogVisible = true)
                     }
 
@@ -118,13 +118,13 @@ class DataBackupViewModel @Inject constructor(
                                 )
                             }
                         }
-                    } catch (fileNotFoundException: FileNotFoundException) {
+                    } catch (_: FileNotFoundException) {
                         state = state.copy(isDataRestorationErrorDialogVisible = true)
-                    } catch (ioException: IOException) {
+                    } catch (_: IOException) {
                         state = state.copy(isDataRestorationErrorDialogVisible = true)
-                    } catch (jsonIoException: JsonIOException) {
+                    } catch (_: JsonIOException) {
                         state = state.copy(isDataRestorationErrorDialogVisible = true)
-                    } catch (jsonIoException: JsonSyntaxException) {
+                    } catch (_: JsonSyntaxException) {
                         state = state.copy(isDataRestorationErrorDialogVisible = true)
                     }
 

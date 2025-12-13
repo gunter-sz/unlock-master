@@ -3,7 +3,6 @@ package com.sweak.unlockmaster.presentation.settings.application_blocked
 import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.net.Uri
 import android.provider.Settings
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -49,6 +48,7 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.times
+import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.navigation.NavController
@@ -233,10 +233,10 @@ fun ApplicationBlockedScreen(
                                         Intent(
                                             Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
                                         ).apply {
-                                            data = Uri.parse("package:${context.packageName}")
+                                            data = "package:${context.packageName}".toUri()
                                         }
                                     )
-                                } catch (exception: ActivityNotFoundException) {
+                                } catch (_: ActivityNotFoundException) {
                                     applicationBlockedViewModel.onEvent(
                                         ApplicationBlockedScreenEvent
                                             .IsIgnoreBatteryOptimizationsRequestUnavailableDialogVisible(
@@ -332,7 +332,7 @@ fun ApplicationBlockedScreen(
                                 try {
                                     uriHandler.openUri(backgroundWorkImprovementWebsite)
                                     hasUserNavigatedToBackgroundWorkWebsite = true
-                                } catch (exception: ActivityNotFoundException) {
+                                } catch (_: ActivityNotFoundException) {
                                     applicationBlockedViewModel.onEvent(
                                         ApplicationBlockedScreenEvent
                                             .IsWebBrowserNotFoundDialogVisible(isVisible = true)
