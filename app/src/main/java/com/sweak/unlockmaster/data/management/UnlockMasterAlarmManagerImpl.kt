@@ -4,7 +4,6 @@ import android.app.AlarmManager
 import android.app.Application
 import android.app.PendingIntent
 import android.content.Intent
-import android.os.Build
 import com.sweak.unlockmaster.domain.management.UnlockMasterAlarmManager
 import com.sweak.unlockmaster.domain.model.DailyWrapUpNotificationsTime
 import com.sweak.unlockmaster.domain.repository.TimeRepository
@@ -25,10 +24,7 @@ class UnlockMasterAlarmManagerImpl @Inject constructor(
             application.applicationContext,
             DAILY_WRAP_UP_ALARM_REQUEST_CODE,
             dailyWrapUpAlarmIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                        PendingIntent.FLAG_IMMUTABLE
-                    else 0
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
         alarmManager.setRepeating(

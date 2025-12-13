@@ -1,7 +1,6 @@
 package com.sweak.unlockmaster.presentation.settings.daily_wrap_up_settings.components
 
 import android.annotation.SuppressLint
-import android.os.Build
 import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.widget.TimePicker
@@ -58,14 +57,8 @@ fun CardTimePicker(
             },
             update = {
                 it.setIs24HourView(is24HourFormat)
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    it.hour = hourOfDay
-                    it.minute = minute
-                } else {
-                    it.currentHour = hourOfDay
-                    it.currentMinute = minute
-                }
+                it.hour = hourOfDay
+                it.minute = minute
             },
             modifier = Modifier
                 .padding(all = MaterialTheme.space.medium)

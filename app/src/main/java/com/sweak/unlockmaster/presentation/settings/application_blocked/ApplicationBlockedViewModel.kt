@@ -1,6 +1,5 @@
 package com.sweak.unlockmaster.presentation.settings.application_blocked
 
-import android.os.Build
 import android.os.PowerManager
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,9 +24,7 @@ class ApplicationBlockedViewModel @Inject constructor(
         viewModelScope.launch {
             state = state.copy(
                 isIgnoringBatteryOptimizations =
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     powerManager.isIgnoringBatteryOptimizations(packageName)
-                } else true
             )
         }
     }
@@ -43,9 +40,7 @@ class ApplicationBlockedViewModel @Inject constructor(
 
                     state = state.copy(
                         isIgnoringBatteryOptimizations =
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             powerManager.isIgnoringBatteryOptimizations(packageName)
-                        } else true
                     )
                 }
             is ApplicationBlockedScreenEvent.IsIgnoreBatteryOptimizationsRequestUnavailableDialogVisible ->

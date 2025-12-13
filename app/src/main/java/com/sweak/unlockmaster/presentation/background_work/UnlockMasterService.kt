@@ -337,10 +337,7 @@ class UnlockMasterService : Service() {
             applicationContext,
             FOREGROUND_SERVICE_NOTIFICATION_REQUEST_CODE,
             Intent(applicationContext, MainActivity::class.java),
-            PendingIntent.FLAG_UPDATE_CURRENT or
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                        PendingIntent.FLAG_IMMUTABLE
-                    else 0
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
         return NotificationCompat.Builder(
@@ -408,10 +405,7 @@ class UnlockMasterService : Service() {
             applicationContext,
             UNLOCK_LIMIT_MOBILIZING_NOTIFICATION_REQUEST_CODE,
             Intent(applicationContext, MainActivity::class.java),
-            PendingIntent.FLAG_UPDATE_CURRENT or
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                        PendingIntent.FLAG_IMMUTABLE
-                    else 0
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
         return NotificationCompat.Builder(
@@ -436,10 +430,7 @@ class UnlockMasterService : Service() {
             applicationContext,
             SCREEN_TIME_LIMIT_MOBILIZING_NOTIFICATION_REQUEST_CODE,
             Intent(applicationContext, MainActivity::class.java),
-            PendingIntent.FLAG_UPDATE_CURRENT or
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                        PendingIntent.FLAG_IMMUTABLE
-                    else 0
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         val notificationTitle = getString(
             if (screenTimeLimitWarningState == WARNING_LIMIT_REACHED_FIRED) {

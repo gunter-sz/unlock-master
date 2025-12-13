@@ -6,7 +6,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.os.Build
 import android.provider.Settings
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -89,10 +88,7 @@ class DailyWrapUpAlarmReceiver : BroadcastReceiver() {
                 putExtra(EXTRA_SHOW_DAILY_WRAP_UP_SCREEN, true)
                 putExtra(EXTRA_DAILY_WRAP_UP_DAY_MILLIS, dailyWrapUpDayTimeInMillis)
             },
-            PendingIntent.FLAG_UPDATE_CURRENT or
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                        PendingIntent.FLAG_IMMUTABLE
-                    else 0
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
         return NotificationCompat.Builder(

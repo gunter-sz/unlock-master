@@ -46,12 +46,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.times
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.navigation.NavController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
@@ -151,110 +151,108 @@ fun WorkInBackgroundScreen(
                 .verticalScroll(rememberScrollState())
         ) {
             Column(modifier = Modifier.padding(paddingValues = it)) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    Text(
-                        text = stringResource(R.string.allow_optimal_work_in_background),
-                        style = MaterialTheme.typography.displayLarge,
-                        modifier = Modifier
-                            .padding(
-                                start = MaterialTheme.space.medium,
-                                top = MaterialTheme.space.medium,
-                                end = MaterialTheme.space.medium,
-                                bottom = MaterialTheme.space.small
-                            )
-                    )
+                Text(
+                    text = stringResource(R.string.allow_optimal_work_in_background),
+                    style = MaterialTheme.typography.displayLarge,
+                    modifier = Modifier
+                        .padding(
+                            start = MaterialTheme.space.medium,
+                            top = MaterialTheme.space.medium,
+                            end = MaterialTheme.space.medium,
+                            bottom = MaterialTheme.space.small
+                        )
+                )
 
-                    Text(
-                        text = stringResource(R.string.allow_optimal_work_in_background_description),
-                        style = MaterialTheme.typography.titleMedium,
-                        modifier = Modifier
-                            .padding(
-                                start = MaterialTheme.space.medium,
-                                end = MaterialTheme.space.medium,
-                                bottom = MaterialTheme.space.medium
-                            )
-                    )
+                Text(
+                    text = stringResource(R.string.allow_optimal_work_in_background_description),
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier
+                        .padding(
+                            start = MaterialTheme.space.medium,
+                            end = MaterialTheme.space.medium,
+                            bottom = MaterialTheme.space.medium
+                        )
+                )
 
-                    ElevatedCard(
-                        colors = CardDefaults.elevatedCardColors(
-                            containerColor = MaterialTheme.colorScheme.surface
-                        ),
-                        elevation = CardDefaults.elevatedCardElevation(
-                            defaultElevation = MaterialTheme.space.xSmall
-                        ),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = MaterialTheme.space.medium)
-                            .clickable(
-                                enabled = !workInBackgroundScreenState.isIgnoringBatteryOptimizations,
-                                onClick = {
-                                    try {
-                                        context.startActivity(
-                                            Intent(
-                                                Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
-                                            ).apply {
-                                                data = Uri.parse("package:${context.packageName}")
-                                            }
-                                        )
-                                    } catch (exception: ActivityNotFoundException) {
-                                        workInBackgroundViewModel.onEvent(
-                                            WorkInBackgroundScreenEvent
-                                                .IsIgnoreBatteryOptimizationsRequestUnavailableDialogVisible(
-                                                    isVisible = true
-                                                )
-                                        )
-                                    }
+                ElevatedCard(
+                    colors = CardDefaults.elevatedCardColors(
+                        containerColor = MaterialTheme.colorScheme.surface
+                    ),
+                    elevation = CardDefaults.elevatedCardElevation(
+                        defaultElevation = MaterialTheme.space.xSmall
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = MaterialTheme.space.medium)
+                        .clickable(
+                            enabled = !workInBackgroundScreenState.isIgnoringBatteryOptimizations,
+                            onClick = {
+                                try {
+                                    context.startActivity(
+                                        Intent(
+                                            Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
+                                        ).apply {
+                                            data = Uri.parse("package:${context.packageName}")
+                                        }
+                                    )
+                                } catch (exception: ActivityNotFoundException) {
+                                    workInBackgroundViewModel.onEvent(
+                                        WorkInBackgroundScreenEvent
+                                            .IsIgnoreBatteryOptimizationsRequestUnavailableDialogVisible(
+                                                isVisible = true
+                                            )
+                                    )
                                 }
-                            )
+                            }
+                        )
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Spacer(modifier = Modifier.width(MaterialTheme.space.medium))
+                        Spacer(modifier = Modifier.width(MaterialTheme.space.medium))
 
-                            Icon(
-                                imageVector = Icons.Outlined.SettingsSuggest,
-                                contentDescription = stringResource(
-                                    R.string.content_description_suggested_settings_icon
-                                ),
-                                modifier = Modifier.size(size = MaterialTheme.space.xLarge)
-                            )
+                        Icon(
+                            imageVector = Icons.Outlined.SettingsSuggest,
+                            contentDescription = stringResource(
+                                R.string.content_description_suggested_settings_icon
+                            ),
+                            modifier = Modifier.size(size = MaterialTheme.space.xLarge)
+                        )
 
-                            Text(
-                                text = stringResource(
-                                    if (!workInBackgroundScreenState.isIgnoringBatteryOptimizations) {
-                                        R.string.work_in_background_limited_click_to_enable
-                                    } else R.string.work_in_background_enabled
-                                ),
-                                style = MaterialTheme.typography.headlineMedium.copy(
-                                    fontWeight = FontWeight.SemiBold
-                                ),
-                                modifier = Modifier
-                                    .padding(all = MaterialTheme.space.medium)
-                                    .weight(1f)
-                            )
-
-                            Icon(
-                                imageVector =
+                        Text(
+                            text = stringResource(
                                 if (!workInBackgroundScreenState.isIgnoringBatteryOptimizations) {
-                                    Icons.AutoMirrored.Outlined.NavigateNext
-                                } else Icons.Outlined.Done,
-                                contentDescription = stringResource(
-                                    if (!workInBackgroundScreenState.isIgnoringBatteryOptimizations) {
-                                        R.string.content_description_next_icon
-                                    } else R.string.content_description_done_icon
-                                ),
-                                modifier = Modifier
-                                    .size(size = MaterialTheme.space.xLarge)
-                                    .padding(all = MaterialTheme.space.small)
-                            )
+                                    R.string.work_in_background_limited_click_to_enable
+                                } else R.string.work_in_background_enabled
+                            ),
+                            style = MaterialTheme.typography.headlineMedium.copy(
+                                fontWeight = FontWeight.SemiBold
+                            ),
+                            modifier = Modifier
+                                .padding(all = MaterialTheme.space.medium)
+                                .weight(1f)
+                        )
 
-                            Spacer(modifier = Modifier.width(MaterialTheme.space.small))
-                        }
+                        Icon(
+                            imageVector =
+                            if (!workInBackgroundScreenState.isIgnoringBatteryOptimizations) {
+                                Icons.AutoMirrored.Outlined.NavigateNext
+                            } else Icons.Outlined.Done,
+                            contentDescription = stringResource(
+                                if (!workInBackgroundScreenState.isIgnoringBatteryOptimizations) {
+                                    R.string.content_description_next_icon
+                                } else R.string.content_description_done_icon
+                            ),
+                            modifier = Modifier
+                                .size(size = MaterialTheme.space.xLarge)
+                                .padding(all = MaterialTheme.space.small)
+                        )
+
+                        Spacer(modifier = Modifier.width(MaterialTheme.space.small))
                     }
-
-                    Spacer(modifier = Modifier.height(MaterialTheme.space.medium))
                 }
+
+                Spacer(modifier = Modifier.height(MaterialTheme.space.medium))
 
                 Text(
                     text = stringResource(R.string.allow_full_work_in_background),
@@ -269,13 +267,7 @@ fun WorkInBackgroundScreen(
                 )
 
                 Text(
-                    text = stringResource(
-                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-                            R.string.allow_full_work_in_background_description_extended
-                        } else {
-                            R.string.allow_full_work_in_background_description
-                        }
-                    ),
+                    text = stringResource(R.string.allow_full_work_in_background_description),
                     style = MaterialTheme.typography.titleMedium,
                     modifier = Modifier
                         .padding(
