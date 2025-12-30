@@ -471,9 +471,11 @@ class UnlockMasterService : Service() {
             userSessionRepository.setUnlockMasterServiceProperlyClosed(true)
         }
 
-        unregisterScreenEventReceivers()
-        unregisterReceiver(unlockCounterPauseReceiver)
-        unregisterReceiver(screenTimeLimitStateReceiver)
+        try {
+            unregisterScreenEventReceivers()
+            unregisterReceiver(unlockCounterPauseReceiver)
+            unregisterReceiver(screenTimeLimitStateReceiver)
+        } catch (_: IllegalArgumentException) { /* no-op */ }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             unregisterReceiver(shutdownReceiver)

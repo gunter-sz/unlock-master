@@ -297,7 +297,7 @@ fun WorkInBackgroundScreen(
                                         WorkInBackgroundScreenEvent
                                             .IsWebBrowserNotFoundDialogVisible(isVisible = true)
                                     )
-                                }
+                                } catch (_: IllegalArgumentException) { /* no-op */ }
                             }
                         )
                 ) {

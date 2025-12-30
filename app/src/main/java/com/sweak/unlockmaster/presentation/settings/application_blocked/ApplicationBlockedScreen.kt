@@ -337,7 +337,7 @@ fun ApplicationBlockedScreen(
                                         ApplicationBlockedScreenEvent
                                             .IsWebBrowserNotFoundDialogVisible(isVisible = true)
                                     )
-                                }
+                                } catch (_: IllegalArgumentException) { /* no-op */ }
                             }
                         )
                 ) {
